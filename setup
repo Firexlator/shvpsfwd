@@ -4,12 +4,9 @@
 BIN_DIR=~/bin
 mkdir -p "$BIN_DIR"
 
-# Define the cloudflared directory
-CLOUDFLARED_DIR=~/cloudflared
-
-# Create the bin scripts if they don't already exist
-START_SCRIPT="$BIN_DIR/tstart"
-STOP_SCRIPT="$BIN_DIR/tstop"
+# Define the paths for the start and stop scripts
+START_SCRIPT="$BIN_DIR/start_tunnel.sh"
+STOP_SCRIPT="$BIN_DIR/stop_tunnel.sh"
 
 # Create the start script
 cat << 'EOF' > "$START_SCRIPT"

@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Define the bin directory and create it if it doesn't exist
-BIN_DIR=~/bin
+read -p "Bin directory : " BIN_DIR
 mkdir -p "$BIN_DIR"
 
 # Define the cloudflared directory
 CLOUDFLARED_DIR=~/cloudflared
 
 # Create the bin scripts if they don't already exist
-START_SCRIPT="$BIN_DIR/start_tunnel.sh"
-STOP_SCRIPT="$BIN_DIR/stop_tunnel.sh"
+START_SCRIPT="$BIN_DIR/start_tunnel"
+STOP_SCRIPT="$BIN_DIR/stop_tunnel"
 
 # Create the start script
 cat << 'EOF' > "$START_SCRIPT"

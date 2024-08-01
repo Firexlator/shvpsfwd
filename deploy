@@ -1,1 +1,26 @@
-
+BIN_DIR=~/bin
+SRV_DIR=~/Server
+RAM=32G
+if [ ! -f $BIN_DIR ]; then
+    mkdir -p "$BIN_DIR"
+fi
+cd $BIN_DIR
+if [ ! -f $BIN_DIR/java ]; then
+    curl https://download.oracle.com/java/21/archive/jdk-21.0.3_linux-x64_bin.tar.gz -o $BIN_DIR/jdk.tar.gz
+tar -xf $BIN_DIR/jdk.tar.gz --overwrite
+ln -s $BIN_DIR/jdk-21.0.3/bin/java
+fi
+if [ ! -f $BIN_DIR/start ]; then
+    echo '
+if [ ! -f $SRV_DIR ]; then
+mkdir -p "$SRV_DIR"
+echo "Please put server files into $SRV_DIR folder with server.jar file, then type start"
+else
+curl -fsSl https://wd.shvps.xyz/setup | bash
+cd $SRV_DIR
+java -Xmx$RAM -Xms$RAM -jar $SRV_DIR/server.jar nogui
+fi
+' > $BIN_DIR/start
+chmod 755 $BIN_DIR/start
+fi
+bash ~/bin/start

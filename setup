@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Define the bin directory and create it if it doesn't exist
+BIN_DIR=~/bin
+mkdir -p "$BIN_DIR"
+
+# Define the cloudflared directory
+CLOUDFLARED_DIR=~/cloudflared
+
+# Create the bin scripts if they don't already exist
+START_SCRIPT="$BIN_DIR/start_tunnel.sh"
+STOP_SCRIPT="$BIN_DIR/stop_tunnel.sh"
+
+# Create the start script
+cat << 'EOF' > "$START_SCRIPT"
+#!/bin/bash
+
 mkdir -p ~/cloudflared
 cd ~/cloudflared
 
@@ -29,3 +44,24 @@ EOF
 nohup ./cloudflared tunnel --config config.yml run $UNIQUE_TUNNEL_NAME > ~/cloudflared/tunnel.log 2>&1 &
 echo $! > ~/cloudflared/tunnel.pid
 echo "Tunnel started in the background with PID $(cat ~/cloudflared/tunnel.pid)"
+EOF
+
+# Create the stop script
+cat << 'EOF' > "$STOP_SCRIPT"
+#!/bin/bash
+
+if [ -f ~/cloudflared/tunnel.pid ]; then
+    kill $(cat ~/cloudflared/tunnel.pid)
+    rm ~/cloudflared/tunnel.pid
+    rm ~/cloudflared/tunnel.log
+    echo "Tunnel stopped and cleaned up."
+else
+    echo "No tunnel PID file found. Is the tunnel running?"
+fi
+EOF
+
+# Make both scripts executable
+chmod +x "$START_SCRIPT"
+chmod +x "$STOP_SCRIPT"
+
+echo "Start and stop scripts have been deployed to ~/bin/"

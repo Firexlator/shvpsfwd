@@ -13,6 +13,7 @@ fi
 if [ ! -f $BIN_DIR/start ]; then
     echo "
 if [ ! -f ~/Server ]; then
+mkdir ~/Server
 curl https://api.papermc.io/v2/projects/paper/versions/1.21/builds/123/downloads/paper-1.21-123.jar -o ~/Server/server.jar
 echo Please put server files into ~/Server folder with server.jar file, then type start
 else

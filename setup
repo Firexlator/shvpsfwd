@@ -1,19 +1,29 @@
-mkdir -p ~/cloudflared && \
-cd ~/cloudflared && \
+mkdir -p ~/cloudflared
+cd ~/cloudflared
+
 if [ ! -f cloudflared ]; then
     curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
     chmod +x cloudflared
-fi && \
+fi
+
 if [ ! -f ~/.cloudflared/cert.pem ]; then
     ./cloudflared login
-fi && \
-UNIQUE_TUNNEL_NAME="minecraft-tunnel-$(date +%s)" && \
-./cloudflared tunnel create $UNIQUE_TUNNEL_NAME && \
-TUNNEL_ID=$(./cloudflared tunnel list | grep $UNIQUE_TUNNEL_NAME | awk '{print $1}') && \
-echo "tunnel: ${TUNNEL_ID}" > config.yml && \
-echo "credentials-file: /home/u227612/.cloudflared/${TUNNEL_ID}.json" >> config.yml && \
-echo "ingress:" >> config.yml && \
-echo "  - hostname: play.shvps.xyz" >> config.yml && \
-echo "    service: tcp://localhost:25565" >> config.yml && \
-echo "  - service: http_status:404" >> config.yml && \
-./cloudflared tunnel --config config.yml run $UNIQUE_TUNNEL_NAME
+fi
+
+UNIQUE_TUNNEL_NAME="minecraft-tunnel-$(date +%s)"
+./cloudflared tunnel create $UNIQUE_TUNNEL_NAME
+TUNNEL_ID=$(./cloudflared tunnel list | grep $UNIQUE_TUNNEL_NAME | awk '{print $1}')
+
+cat <<EOF > config.yml
+tunnel: ${TUNNEL_ID}
+credentials-file: /home/u227612/.cloudflared/${TUNNEL_ID}.json
+
+ingress:
+  - hostname: play.shvps.xyz
+    service: tcp://localhost:25565
+  - service: http_status:404
+EOF
+
+./cloudflared tunnel --config config.yml run $UNIQUE_TUNNEL_NAME &
+echo $! > ~/cloudflared/tunnel.pid
+echo "Tunnel started in the background with PID $(cat ~/cloudflared/tunnel.pid)"

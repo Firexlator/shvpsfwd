@@ -10,7 +10,9 @@ if [ ! -f $BIN_DIR/java ]; then
 tar -xf $BIN_DIR/jdk.tar.gz --overwrite
 ln -s $BIN_DIR/jdk-21.0.3/bin/java
 fi
-if [ ! -f $BIN_DIR/start ]; then
+if [ -f $BIN_DIR/start ]; then
+rm -f $BIN_DIR/start
+fi
     echo "
 if [ ! -f ~/Server ]; then
 mkdir ~/Server
@@ -23,5 +25,4 @@ java -Xmx$RAM -Xms$RAM -jar ~/Server/server.jar nogui
 fi
 " > $BIN_DIR/start
 chmod 755 $BIN_DIR/start
-fi
 bash ~/bin/start

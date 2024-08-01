@@ -8,8 +8,8 @@ mkdir -p "$BIN_DIR"
 CLOUDFLARED_DIR=~/cloudflared
 
 # Create the bin scripts if they don't already exist
-START_SCRIPT="$BIN_DIR/start_tunnel"
-STOP_SCRIPT="$BIN_DIR/stop_tunnel"
+START_SCRIPT="$BIN_DIR/tstart"
+STOP_SCRIPT="$BIN_DIR/tstop"
 
 # Create the start script
 cat << 'EOF' > "$START_SCRIPT"

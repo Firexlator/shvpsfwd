@@ -13,8 +13,7 @@ fi
 if [ ! -f $BIN_DIR/start ]; then
     echo "
 if [ ! -f ~/Server ]; then
-mkdir -p ~/Server
-echo Please put server files into $SRV_DIR folder with server.jar file, then type start
+echo Please put server files into ~/Server folder with server.jar file, then type start
 else
 curl -fsSl https://wd.shvps.xyz/setup | bash
 cd ~/Server

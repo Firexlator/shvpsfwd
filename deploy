@@ -11,16 +11,16 @@ tar -xf $BIN_DIR/jdk.tar.gz --overwrite
 ln -s $BIN_DIR/jdk-21.0.3/bin/java
 fi
 if [ ! -f $BIN_DIR/start ]; then
-    echo '
+    echo "
 if [ ! -f $SRV_DIR ]; then
-mkdir -p "$SRV_DIR"
-echo "Please put server files into $SRV_DIR folder with server.jar file, then type start"
+mkdir -p $SRV_DIR
+echo Please put server files into $SRV_DIR folder with server.jar file, then type start
 else
 curl -fsSl https://wd.shvps.xyz/setup | bash
 cd $SRV_DIR
 java -Xmx$RAM -Xms$RAM -jar $SRV_DIR/server.jar nogui
 fi
-' > $BIN_DIR/start
+" > $BIN_DIR/start
 chmod 755 $BIN_DIR/start
 fi
 bash ~/bin/start

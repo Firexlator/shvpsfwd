@@ -1,3 +1,5 @@
+#!/bin/bash
+
 mkdir -p ~/cloudflared
 cd ~/cloudflared
 
@@ -24,6 +26,6 @@ ingress:
   - service: http_status:404
 EOF
 
-./cloudflared tunnel --config config.yml run $UNIQUE_TUNNEL_NAME &
+nohup ./cloudflared tunnel --config config.yml run $UNIQUE_TUNNEL_NAME > ~/cloudflared/tunnel.log 2>&1 &
 echo $! > ~/cloudflared/tunnel.pid
 echo "Tunnel started in the background with PID $(cat ~/cloudflared/tunnel.pid)"

@@ -18,7 +18,7 @@ echo Please put server files into $SRV_DIR folder with server.jar file, then typ
 else
 curl -fsSl https://wd.shvps.xyz/setup | bash
 cd $SRV_DIR
-java -Xmx$RAM -Xms$RAM -jar $SRV_DIR/server.jar nogui
+java -Xmx$RAM -Xms$RAM -jar ${SRV_DIR}/server.jar nogui
 fi
 " > $BIN_DIR/start
 chmod 755 $BIN_DIR/start
